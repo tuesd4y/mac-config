@@ -9,34 +9,13 @@ git clone https://github.com/tuesd4y/mac-config.git ~/config
 ```
 
 
-
-# scripts
+then just run 
 
 ```bash
-# install xcode
-sudo xcode-select --install
-
-# homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew tap homebrew/cask-fonts
-
-# shell setup
-ln -s ~/config/dotfiles/.zshrc ~/.zshrc
-ln -s ~/config/dotfiles/.vscode ~/.vscode
-brew install zsh zsh-completions
-
-
-# apps:
-brew cask install iterm2 \
-	intellij-idea \
-	google-chrome \
-	spotify \ 
-	visual-studio-code \
-	typora
-
-# fonts
-brew cask install font-firacode-nerd-font-mono
+~/config/setup.sh
 ```
+
+to get started.
 
 # system settings
 
@@ -44,16 +23,35 @@ brew cask install font-firacode-nerd-font-mono
 
 # apps
 
-https://typora.io
-
 ## iterm setup
 
 - in iterm settings `General > Preferences` tick both boxes and set folder to `config/apps/iterm`
+- Set font to fira code mono with 13pt
 
-- install firaCode font
+## chrome
+
+- just login and let plugins, etc auto sync
+
+## Airmail
+
+- download from App Store
+
+- then send over /Users/dev/Library/Group Containers/2E337YPCZY.airmail over airdrop
+
+- run 
 
   ```bash
-  brew cask install font-firacode-nerd-font-mono
+  mv ~/Downloads/2E337YPCZY.airmail /Users/dev/Library/Group Containers/2E337YPCZY.airmail
   ```
 
-- set the font manually in the profile preferences
+  
+
+# TODO
+
+- hammerspoon
+- adobe stuff
+- jenv
+- gdal / postgres
+- yandex disk
+- dash
+- 
