@@ -11,3 +11,5 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme bhilburn/powerlevel9k powerlevel9k
 
 antigen apply
+
+source ~/env.zsh

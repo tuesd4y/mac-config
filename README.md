@@ -44,14 +44,17 @@ to get started.
   mv ~/Downloads/2E337YPCZY.airmail /Users/dev/Library/Group Containers/2E337YPCZY.airmail
   ```
 
-  
+## Dash
+
+https://frankfurt.kapeli.com/downloads/v4/Dash.zip
+
+## Docker for MAC
+
+https://download.docker.com/mac/stable/Docker.dmg
+
+
 
 # TODO
 
-- hammerspoon
-- adobe stuff
 - jenv
-- gdal / postgres
-- yandex disk
-- dash
 - 
