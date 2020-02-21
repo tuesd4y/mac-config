@@ -56,5 +56,26 @@ https://download.docker.com/mac/stable/Docker.dmg
 
 # TODO
 
-- jenv
-- 
+- predefined window-orders
+- project dir setup
+- geojsonio cli
+- quicklook plugins
+- gradle
+
+## TODO - more detailed
+
+https://ytdl-org.github.io/youtube-dl/index.html
+
+https://gist.github.com/nyergler/7056c61174194a9af9b4d5d727f1b566 or similar window management
+
+https://github.com/Tarrasch/zsh-autoenv
+
+https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/osx
+
+https://github.com/mapbox/geojsonio-cli look at the examples at the bottom for some magic
+
+vim + usage for markdown editing
+
+https://github.com/Vonng/Capslock
+
+https://github.com/gpakosz/.tmux
