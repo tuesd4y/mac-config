@@ -1,7 +1,9 @@
 export PATH="$HOME/.jenv/bin:$PATH"
+export WORKON_HOME=~/.envs
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(pyenv init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 eval "$(thefuck --alias)"
 eval "$(jenv init -)"
 

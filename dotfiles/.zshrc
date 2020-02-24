@@ -12,6 +12,7 @@ antigen bundle colored-man-pages
 antigen bundle git
 antigen bundle git-extras
 antigen bundle gradle
+antigen bundle virtualenv
 antigen bundle npm
 antigen bundle docker
 

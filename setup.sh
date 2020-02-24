@@ -6,6 +6,7 @@ sudo xcode-select --install
 brew tap homebrew/cask-fonts
 brew tap osgeo/osgeo4mac
 brew tap heroku/brew
+brew tap homebrew/cask-versions
 
 # shell setup
 ln -s ~/config/dotfiles/.zshrc ~/.zshrc
@@ -18,6 +19,7 @@ ln -s ~/config/dotfiles/.vscode ~/.vscode
 ln -s ~/config/dotfiles/karabiner .config/karabiner
 ln -s ~/config/dotfiles/env.zsh ~/env.zsh
 ln -s ~/config/dotfiles/bitbar ~/.bitbar
+ln -s ~/config/dotfiles/.hammerspoon ~/.hammerspoon
 
 # private dotfiles
 mkdir ~/config/private
@@ -36,9 +38,15 @@ mkdir ~/code/temp
 mkdir ~/code/uni
 mkdir ~/code/home
 
-mkdir ~/Documents/uni
-mkdir ~/Documents/triply
-mkdir ~/Documents/personal
+# unfortunately we need to sudo this :(
+sudo rm -rf ~/Documents
+mkdir ~/docs
+ln -s ~/docs ~/Documents
+mkdir ~/docs/uni
+mkdir ~/docs/triply
+mkdir ~/docs/personal
+
+mkdir ~/.envs
 
 # tooling stuff
 brew install postgresql \
@@ -48,6 +56,7 @@ brew install postgresql \
 	fzf \
 	docker \
 	pyenv \
+	pyenv-virtualenv \
 	tldr \
 	thefuck \
 	tmux \
@@ -57,13 +66,6 @@ brew install postgresql \
 	jenv \
 	pgcli \
 	imagemagick
-
-
-# python with pyenv + jupyter
-pyenv install 3.8.1
-pyenv local 3.8.1
-pyenv global 3.8.1
-brew install jupyter
 
 # apps:
 brew cask install iterm2 \
@@ -85,7 +87,8 @@ brew cask install iterm2 \
 	transmission \
 	skype \
 	google-drive-file-stream \
-	bitbar
+	bitbar \
+	brew cask install adoptopenjdk8
 
 # ql plugins
 brew cask install quickgeojson \
@@ -106,6 +109,7 @@ cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
 # jenv config
 # might be a different version now
 jenv add /Library/Java/JavaVirtualMachines/openjdk-13.0.2.jdk/Contents/Home
+jenv add jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
 jenv global 13.0.2
 
 # fonts
@@ -114,7 +118,25 @@ brew cask install font-firacode-nerd-font-mono
 # login to cli tools
 heroku login
 aws configure sso
+firebase login
 
 # other configuration
 # selection in quick-look
 defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder
+
+# python with pyenv + jupyter
+pyenv install 3.8.1
+
+pyenv virtualenv 3.8.1 jupyter3
+pyenv virtualenv 3.8.1 tools3
+
+pyenv activate jupyter3
+pip install jupyter
+python -m ipykernel install --user
+pyenv deactivate
+
+pyenv local 3.8.1 jupyter3
+pyenv global 3.8.1 jupyter3
+
+pip install virtualenv
+pip install virtualenvwrapper
