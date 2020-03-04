@@ -65,7 +65,8 @@ brew install postgresql \
 	awscli \
 	jenv \
 	pgcli \
-	imagemagick
+	imagemagick \
+	pygments
 
 # apps:
 brew cask install iterm2 \
@@ -98,7 +99,10 @@ brew cask install quickgeojson \
 	betterzip 
 
 # npm packages
-npm install -g geojson-cli
+npm install -g geojsonio-cli
+npm install -g @mapbox/polyline
+npm install -g gjv
+
 
 # alfred (without brew)
 curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg > alfred.dmg
@@ -110,7 +114,9 @@ cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
 # might be a different version now
 jenv add /Library/Java/JavaVirtualMachines/openjdk-13.0.2.jdk/Contents/Home
 jenv add jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
-jenv global 13.0.2
+jenv global 1.8
+jenv enable-plugin maven
+jenv enable-plugin export
 
 # fonts
 brew cask install font-firacode-nerd-font-mono
@@ -140,3 +146,6 @@ pyenv global 3.8.1 jupyter3
 
 pip install virtualenv
 pip install virtualenvwrapper
+
+# setup flutter stuff?
+# TODO

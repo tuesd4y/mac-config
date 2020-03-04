@@ -1,3 +1,7 @@
+###############################
+###    general path setup   ###
+###############################
+
 export PATH="$HOME/.jenv/bin:$PATH"
 export WORKON_HOME=~/.envs
 
@@ -6,6 +10,31 @@ eval "$(pyenv init -)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 eval "$(thefuck --alias)"
 eval "$(jenv init -)"
+. $(brew --prefix asdf)/asdf.sh
+
+
+
+
+###############################
+###  optional android stuff ###
+###############################
+
+export ANT_HOME=/usr/local/opt/ant
+export MAVEN_HOME=/usr/local/opt/maven
+export GRADLE_HOME=/usr/local/opt/gradle
+export ANDROID_HOME=/usr/local/share/android-sdk
+export ANDROID_NDK_HOME=/usr/local/share/android-ndk
+export INTEL_HAXM_HOME=/usr/local/Caskroom/intel-haxm
+
+export PATH=$ANT_HOME/bin:$PATH
+export PATH=$MAVEN_HOME/bin:$PATH
+export PATH=$GRADLE_HOME/bin:$PATH
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/build-tools/29.0.3:$PATH
+
+
+
 
 ###############################
 ### helpful shell functions ###
@@ -46,3 +75,10 @@ transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
 
 alias ql='qlmanage -p "$@" >& /dev/null'
+
+alias build='./gradlew build'
+
+alias pyg=/usr/local/Cellar/pygments/2.4.2_1/bin/pygmentize
+hi() { 
+  cat $1 | pyg | less 
+}

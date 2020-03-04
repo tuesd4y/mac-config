@@ -3,3 +3,6 @@
 
 # exclude private dir from git repo
 /private/**
+
+# vscode extensions
+/dotfiles/.vscode/extensions
