@@ -4,7 +4,7 @@
 
 export PATH="$HOME/.jenv/bin:$PATH"
 export WORKON_HOME=~/.envs
-
+export USER_HOME=/Users/dev
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(pyenv init -)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
@@ -51,7 +51,7 @@ fzd() {
 }
 
 # fh - search in your command history and execute selected command
-fzh() {
+fh() {
   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
@@ -70,7 +70,7 @@ ch() {
   fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
-# transfer.sht
+# transfer.sh file sharing
 transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
 
@@ -82,3 +82,26 @@ alias pyg=/usr/local/Cellar/pygments/2.4.2_1/bin/pygmentize
 hi() { 
   cat $1 | pyg | less 
 }
+
+#---
+## Open the passed file with typora 
+## (should mainly be used as an alternative for editing markdown files)
+#---
+tp() {
+  open -a Typora "$1"
+}
+
+alias grad=./gradlew
+alias vg=geojsonio
+alias gjm='geojson-merge'
+
+
+################################
+### fixing noisy wget output ###
+################################ 
+
+export LC_NUMERIC=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+export LC_COLLATE=en_US.UTF-8
+export LC_MONETARY=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8

@@ -66,7 +66,8 @@ brew install postgresql \
 	jenv \
 	pgcli \
 	imagemagick \
-	pygments
+	pygments \
+	jq
 
 # apps:
 brew cask install iterm2 \
@@ -89,7 +90,7 @@ brew cask install iterm2 \
 	skype \
 	google-drive-file-stream \
 	bitbar \
-	brew cask install adoptopenjdk8
+	adoptopenjdk8 
 
 # ql plugins
 brew cask install quickgeojson \
@@ -147,5 +148,11 @@ pyenv global 3.8.1 jupyter3
 pip install virtualenv
 pip install virtualenvwrapper
 
-# setup flutter stuff?
-# TODO
+###########
+## TODO: ##
+###########
+
+# - pandoc / latex
+# - pidcat
+# - cheatsheets hosted somewhere?
+# - geojson tools
