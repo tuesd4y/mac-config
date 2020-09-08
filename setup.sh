@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # install xcode
 sudo xcode-select --install
 
@@ -67,7 +69,11 @@ brew install postgresql \
 	pgcli \
 	imagemagick \
 	pygments \
-	jq
+	jq \
+	r \
+	maven \
+	pidcat \
+	nvm
 
 # apps:
 brew cask install iterm2 \
@@ -90,7 +96,8 @@ brew cask install iterm2 \
 	skype \
 	google-drive-file-stream \
 	bitbar \
-	adoptopenjdk8 
+	adoptopenjdk8 \
+	rstudio
 
 # ql plugins
 brew cask install quickgeojson \
@@ -99,11 +106,19 @@ brew cask install quickgeojson \
 	qlmarkdown \
 	betterzip 
 
+# use system node version per default
+nvm alias default system
+
 # npm packages
 npm install -g geojsonio-cli
 npm install -g @mapbox/polyline
 npm install -g gjv
+npm install -g localtunnel
 
+# configure localtunnel to lct to work with default zsh aliases
+mv /usr/local/bin/lt /usr/local/bin/lct
+
+echo '#!/bin/bash' > ~/config/private/exports.sh
 
 # alfred (without brew)
 curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg > alfred.dmg
@@ -131,6 +146,10 @@ firebase login
 # selection in quick-look
 defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder
 
+# change screenshots folder to pictures/screens
+mkdir ~/Pictures/screens
+defaults write com.apple.screencapture location /Users/dev/Pictures/screens
+
 # python with pyenv + jupyter
 pyenv install 3.8.1
 
@@ -153,6 +172,5 @@ pip install virtualenvwrapper
 ###########
 
 # - pandoc / latex
-# - pidcat
 # - cheatsheets hosted somewhere?
 # - geojson tools

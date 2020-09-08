@@ -1,15 +1,14 @@
 # Install on new mac
 
- general information: https://sourabhbajaj.com/mac-setup/Homebrew/
+general information: https://sourabhbajaj.com/mac-setup/Homebrew/
 
-first check out this repository by running 
+first check out this repository by running
 
 ```bash
 git clone https://github.com/tuesd4y/mac-config.git ~/config
 ```
 
-
-then just run 
+then just run
 
 ```bash
 ~/config/setup.sh
@@ -30,7 +29,7 @@ to get started.
 
 ## chrome
 
-- just login and let plugins, etc auto sync
+- just login and get plugins, etc auto sync
 
 ## Airmail
 
@@ -38,7 +37,7 @@ to get started.
 
 - then send over /Users/dev/Library/Group Containers/2E337YPCZY.airmail over airdrop
 
-- run 
+- run
 
   ```bash
   mv ~/Downloads/2E337YPCZY.airmail /Users/dev/Library/Group Containers/2E337YPCZY.airmail
@@ -52,15 +51,9 @@ https://frankfurt.kapeli.com/downloads/v4/Dash.zip
 
 https://download.docker.com/mac/stable/Docker.dmg
 
-
-
 # TODO
 
 - predefined window-orders
-- project dir setup
-- geojsonio cli
-- quicklook plugins
-- gradle
 
 ## TODO - more detailed
 

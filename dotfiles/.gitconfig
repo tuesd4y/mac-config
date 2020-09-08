@@ -1,3 +1,5 @@
 [user]
 	email = tuesd4y@protonmail.ch
 	name = Chris Stelzmüller
+[core]
+	autocrlf = input
