@@ -73,7 +73,10 @@ brew install postgresql \
 	r \
 	maven \
 	pidcat \
-	nvm
+	nvm \
+	ripgrep \
+	bat \
+	tree
 
 # apps:
 brew cask install iterm2 \
@@ -101,10 +104,11 @@ brew cask install iterm2 \
 
 # ql plugins
 brew cask install quickgeojson \
-	qlcolorcode `#syntax highlighting` \
-	qlstephen `# README and other extension-less files` \
+	qlcolorcode $(#syntax highlighting` \
+		qlstephen
+	) \
 	qlmarkdown \
-	betterzip 
+	betterzip # README and other extension-less files` \
 
 # use system node version per default
 nvm alias default system
@@ -117,11 +121,13 @@ npm install -g localtunnel
 
 # configure localtunnel to lct to work with default zsh aliases
 mv /usr/local/bin/lt /usr/local/bin/lct
+echo '#!/bin/bash' >~/config/private/exports.sh
 
-echo '#!/bin/bash' > ~/config/private/exports.sh
+# configure git ll alias for fzf_git_log function
+git config --global alias.ll 'log --graph --format="%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
 
 # alfred (without brew)
-curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg > alfred.dmg
+curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg >alfred.dmg
 open alfred.dmg
 cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
 # then copy the license key data in there and import settings from old machine.
@@ -144,7 +150,8 @@ firebase login
 
 # other configuration
 # selection in quick-look
-defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder
+defaults write com.apple.finder QLEnableTextSelection -bool TRUE
+killall Finder
 
 # change screenshots folder to pictures/screens
 mkdir ~/Pictures/screens
@@ -166,11 +173,3 @@ pyenv global 3.8.1 jupyter3
 
 pip install virtualenv
 pip install virtualenvwrapper
-
-###########
-## TODO: ##
-###########
-
-# - pandoc / latex
-# - cheatsheets hosted somewhere?
-# - geojson tools

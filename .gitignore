@@ -5,4 +5,4 @@
 /private/**
 
 # vscode extensions
-/dotfiles/.vscode/extensions
+/dotfiles/.vscode

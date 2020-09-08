@@ -7,7 +7,7 @@ export WORKON_HOME=~/.envs
 export USER_HOME=/Users/dev
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(pyenv init -)"
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+if which pyenv-virtualenv-init >/dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 eval "$(thefuck --alias)"
 eval "$(jenv init -)"
 . $(brew --prefix asdf)/asdf.sh
@@ -15,7 +15,6 @@ eval "$(jenv init -)"
 # node version manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
 
 ###############################
 ###  optional android stuff ###
@@ -35,9 +34,6 @@ export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 export PATH=$ANDROID_HOME/build-tools/29.0.3:$PATH
 
-
-
-
 ###############################
 ### helpful shell functions ###
 ###############################
@@ -48,8 +44,8 @@ export PATH=$ANDROID_HOME/build-tools/29.0.3:$PATH
 fzd() {
   local dir
   dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+    -o -type d -print 2>/dev/null | fzf +m) &&
+    cd "$dir"
 }
 
 # fh - search in your command history and execute selected command
@@ -60,7 +56,7 @@ fh() {
 # ch - browse chrome history
 ch() {
   local cols sep
-  cols=$(( COLUMNS / 3 ))
+  cols=$((COLUMNS / 3))
   sep='{::}'
 
   cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
@@ -68,18 +64,79 @@ ch() {
   sqlite3 -separator $sep /tmp/h \
     "select substr(title, 1, $cols), url
      from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
+    awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+    fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
-# transfer.sh file sharing
-transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
-tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl -w "\n" --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
+##############################
+## SOME MORE FUN WITH FZF ###
+##############################
 
+# blatantly stolen from https://bluz71.github.io/2018/11/26/fuzzy-finding-in-bash-with-fzf.html
+fzf_grep_edit() {
+  if [[ $# == 0 ]]; then
+    echo 'Error: search term was not provided.'
+    return
+  fi
+  local match=$(
+    rg --color=never --line-number "$1" |
+      fzf --no-multi --delimiter : \
+        --preview "bat --color=always --line-range {2}: {1}"
+  )
+  local file=$(echo "$match" | cut -d':' -f1)
+  if [[ -n $file ]]; then
+    if [[ $TYPORA == 1 ]]; then
+      open -a Typora "$file"
+    else
+      $EDITOR "$file" +$(echo "$match" | cut -d':' -f2)
+    fi
+  fi
+}
+
+alias fge='fzf_grep_edit'
+
+# search for md files in meetings folder with given content and open chosen with typora
+meetings() {
+  cd ~/docs/meetings/*.md
+  TYPORA="1"
+  echo "$1"
+  fzf_grep_edit "$1"
+  cd -
+}
+
+# browse git logs
+fzf_git_log() {
+  local selections=$(
+    git ll --color=always "$@" |
+      fzf --ansi --no-sort --no-height \
+        --preview "echo {} | grep -o '[a-f0-9]\{7\}' | head -1 |
+                       xargs -I@ sh -c 'git show --color=always @'"
+  )
+  if [[ -n $selections ]]; then
+    local commits=$(echo "$selections" | cut -d' ' -f2)
+    git show $commits
+  fi
+}
+alias gll='fzf_git_log'
+
+# transfer.sh file sharing
+transfer() {
+  if [ $# -eq 0 ]; then
+    echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+    return 1
+  fi
+  tmpfile=$(mktemp -t transferXXX)
+  if tty -s; then
+    basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+    curl -w "\n" --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >>$tmpfile
+  else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >>$tmpfile; fi
+  cat $tmpfile
+  rm -f $tmpfile
+}
 
 #---
-#Useful aliases: 
-## Open the passed file with typora 
+#Useful aliases:
+## Open the passed file with typora
 ## (should mainly be used as an alternative for editing markdown files)
 #---
 alias tp="open -a Typora"
@@ -93,21 +150,19 @@ alias pyg=/usr/local/Cellar/pygments/2.4.2_1/bin/pygmentize
 
 alias pk=pagekite.py
 
-
-hi() { 
-  cat $1 | pyg | less 
+hi() {
+  cat $1 | pyg | less
 }
 
 ################################
 ### fixing noisy wget output ###
-################################ 
+################################
 
 export LC_NUMERIC=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
 export LC_COLLATE=en_US.UTF-8
 export LC_MONETARY=en_US.UTF-8
 export LC_MESSAGES=en_US.UTF-8
-
 
 ############################
 # R and gettext path setup #
@@ -119,5 +174,7 @@ export CPPFLAGS="-I/usr/local/opt/gettext/include"
 
 # add config/scripts to path
 export PATH="/Users/dev/config/scripts:$PATH"
+
+export EDITOR="code"
 
 source ~/config/private/export.sh
