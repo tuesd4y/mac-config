@@ -31,18 +31,6 @@ to get started.
 
 - just login and get plugins, etc auto sync
 
-## Airmail
-
-- download from App Store
-
-- then send over /Users/dev/Library/Group Containers/2E337YPCZY.airmail over airdrop
-
-- run
-
-  ```bash
-  mv ~/Downloads/2E337YPCZY.airmail /Users/dev/Library/Group Containers/2E337YPCZY.airmail
-  ```
-
 ## Dash
 
 https://frankfurt.kapeli.com/downloads/v4/Dash.zip
@@ -54,6 +42,16 @@ https://download.docker.com/mac/stable/Docker.dmg
 # TODO
 
 - predefined window-orders
+- vivaldi setup
+- 1pass setup
+- add chrome / vivaldi plugins in here
+- add typora triply theme
+- using [rsync](https://linux.die.net/man/1/rsync) to mirror local docs/meetings folder onto [google drive](https://drive.google.com/drive/u/1/)
+- should be executed whenever a new .md file is written to the local meetings folder
+  - maybe also build md files automatically before copying them
+  - if above not possible, map karabiner shortcut for that
+- some youtube dl usages
+- rsync for mirroring calibre library + movies to usb stick / drive
 
 ## TODO - more detailed
 
