@@ -53,6 +53,12 @@ https://download.docker.com/mac/stable/Docker.dmg
 - some youtube dl usages
 - rsync for mirroring calibre library + movies to usb stick / drive
 
+- **shortcut that opens screenshots folder in finder**
+
+- Add bettertouchtool config links
+~/Library/Application Support/BetterTouchTool
+~/Library/Preferences/com.hegenberg.BetterTouchTool.plist
+
 ## TODO - more detailed
 
 https://ytdl-org.github.io/youtube-dl/index.html
