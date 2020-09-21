@@ -1,0 +1,11 @@
+{
+    "stylesheet": [
+        "/Users/dev/Library/Application Support/abnerworks.Typora/themes/triply.css"
+    ],
+    "body_class": "markdown-body",
+    "pdf_options": {
+        "format": "A4",
+        "margin": "20mm",
+        "printBackground": true
+    }
+}

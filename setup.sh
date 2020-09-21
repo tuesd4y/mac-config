@@ -76,7 +76,8 @@ brew install postgresql \
 	nvm \
 	ripgrep \
 	bat \
-	tree
+	tree \
+	fswatch
 
 # apps:
 brew cask install iterm2 \
@@ -118,6 +119,7 @@ npm install -g geojsonio-cli
 npm install -g @mapbox/polyline
 npm install -g gjv
 npm install -g localtunnel
+npm install -g md-to-pdf
 
 # configure localtunnel to lct to work with default zsh aliases
 mv /usr/local/bin/lt /usr/local/bin/lct

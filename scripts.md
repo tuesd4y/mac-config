@@ -20,3 +20,17 @@ tunnel 8080
 
 - localtunnel - `npm i -g localtunnel` ->  `lt -p 8080`
 - Serve - `npm i -g serve` -> `serve .`
+- Copy all files from bills folder for a given month
+
+```bash
+ cp 2020_08_*/*.* ~/docs/print
+```
+
+- move last n commits into new branch and reset old to before
+  (source: [howchoo.com](https://howchoo.com/git/git-move-your-latest-commits-to-another-branch)
+
+```bash
+git branch <new branch>
+git reset --keep HEAD~<N>
+git checkout <new branch>
+```
