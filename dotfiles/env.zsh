@@ -6,15 +6,16 @@ export PATH="$HOME/.jenv/bin:$PATH"
 export WORKON_HOME=~/.envs
 export USER_HOME=/Users/dev
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(pyenv init -)"
-if which pyenv-virtualenv-init >/dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 eval "$(thefuck --alias)"
 eval "$(jenv init -)"
-. $(brew --prefix asdf)/asdf.sh
 
 # node version manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# sphinx doc
+export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/openexr/lib/pkgconfig:/usr/local/opt/imath/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 ###############################
 ###  optional android stuff ###
@@ -177,4 +178,15 @@ export PATH="/Users/dev/config/scripts:$PATH"
 
 export EDITOR="code"
 
-source ~/config/private/export.sh
+# Custom SERVER_URL setup script
+# source ~/config/private/export.sh
+
+# setup ruby from asdf on path
+. $(brew --prefix asdf)/asdf.sh
+
+alias yta='youtube-dl --ignore-config -x'
+source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+
+# setup for rupa/z
+. /usr/local/etc/profile.d/z.sh

@@ -5,6 +5,7 @@ sudo xcode-select --install
 
 # homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew tap homebrew/cask
 brew tap homebrew/cask-fonts
 brew tap osgeo/osgeo4mac
 brew tap heroku/brew
@@ -57,8 +58,6 @@ brew install postgresql \
 	tree \
 	fzf \
 	docker \
-	pyenv \
-	pyenv-virtualenv \
 	tldr \
 	thefuck \
 	tmux \
@@ -77,10 +76,12 @@ brew install postgresql \
 	ripgrep \
 	bat \
 	tree \
-	fswatch
+	fswatch \
+	sphinx-doc \
+	ncdu
 
 # apps:
-brew cask install iterm2 \
+brew install iterm2 \
 	intellij-idea \
 	google-chrome \
 	spotify \
@@ -110,6 +111,9 @@ brew cask install quickgeojson \
 	) \
 	qlmarkdown \
 	betterzip # README and other extension-less files` \
+
+# google cloud command line tools
+brew install google-cloud-sdk
 
 # use system node version per default
 nvm alias default system
