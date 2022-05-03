@@ -58,3 +58,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 export DOCKER_HOST=tcp://173.212.193.241:2376
 export DOCKER_TLS_VERIFY=1
 export DOCKER_CERT_PATH=$HOME/.docker/
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

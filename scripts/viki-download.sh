@@ -10,7 +10,7 @@ subFormat="srt"
 subLanguage="en,zt"
 
 youtube-dl "$1" \
-    --playlist-item 1-2 `# for not downloading all files`\
+    --playlist-item 5-24 `# for not downloading all files`\
     -o '~/Movies/media/viki/%(title)s.%(ext)s' \
     --write-sub \
         --sub-format "$subFormat" \

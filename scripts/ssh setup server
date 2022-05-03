@@ -1,0 +1,27 @@
+groupadd sftp_confidential
+useradd -d /var/data -s /bin/false -G sftp_confidential chris
+useradd -d /var/data -s /bin/false -G sftp_confidential nikolai
+useradd -d /var/data -s /bin/false -G sftp_confidential luuk
+
+passwd chris
+passwd nikolai
+passwd luuk
+
+nano /etc/ssh/sshd_config
+
+nano /etc/ssh/sshd_config
+# Comment out the following line by adding a hash symbol (#) at the beginning, as shown in the following example:
+
+# #Subsystem sftp /usr/lib/openssh/sftp-server
+# Add the following line directly below the line that you just commented out:
+
+# Subsystem sftp internal-sftp
+# Add the following code to the bottom of the file:
+
+# Match Group sftponly
+#      ChrootDirectory %h
+#      X11Forwarding no
+#      AllowTCPForwarding no
+#      ForceCommand internal-sftp
+chown root:root /var/data/
+chmod 777 /var/data
