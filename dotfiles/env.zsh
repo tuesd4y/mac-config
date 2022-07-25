@@ -188,8 +188,6 @@ eval "$(pyenv init -)"
 . $(brew --prefix asdf)/asdf.sh
 
 alias yta='youtube-dl --ignore-config -x'
-source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
-source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
-
-# setup for rupa/z
-. /usr/local/etc/profile.d/z.sh
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+autoload -U bashcompinit && bashcompinit

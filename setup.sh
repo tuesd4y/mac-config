@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -x
+set -v 
+
 # install xcode cli tools
 sudo xcode-select --install
 
@@ -62,6 +65,8 @@ mkdir ~/.envs
 if [[ $(uname -m) == 'arm64' ]]; then
 	# install rosetta which is still needed for some docker features
 	softwareupdate --install-rosetta
+
+	brew install utm
 fi
 
 # tooling stuff
@@ -87,6 +92,8 @@ brew install postgresql \
 	tree \
 	fswatch \
 	ncdu \
+	z \
+	asdf \
 	heroku \
 	awscli \
 	firebase-cli \
@@ -110,7 +117,13 @@ brew install iterm2 \
 	transmission \
 	google-drive-file-stream \
 	bitbar \
-	rstudio
+	surfshark \
+	rstudio \
+	zoom \
+	whatsapp \
+	microsoft-office \
+	zotero \
+	anki
 
 # ql plugins
 brew cask install quickgeojson \
