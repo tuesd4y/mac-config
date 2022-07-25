@@ -176,7 +176,10 @@ export CPPFLAGS="-I/usr/local/opt/gettext/include"
 # add config/scripts to path
 export PATH="/Users/dev/config/scripts:$PATH"
 
-export EDITOR="code"
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # Custom SERVER_URL setup script
 # source ~/config/private/export.sh

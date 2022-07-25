@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# install xcode
+# install xcode cli tools
 sudo xcode-select --install
 
 # homebrew
@@ -11,7 +11,14 @@ brew tap osgeo/osgeo4mac
 brew tap heroku/brew
 brew tap homebrew/cask-versions
 
-# shell setup
+# general mac setup
+brew install git
+# for more details on bash installation see here
+# https://stackoverflow.com/questions/10574969/how-do-i-install-bash-3-2-25-on-mac-os-x-10-5-8
+brew install bash
+echo '/usr/local/bin/bash' | sudo tee -a /etc/shells
+
+# zsh shell setup
 ln -s ~/config/dotfiles/.zshrc ~/.zshrc
 brew install zsh zsh-completions
 
@@ -51,6 +58,12 @@ mkdir ~/docs/personal
 
 mkdir ~/.envs
 
+# Special setup for m1 macs
+if [[ $(uname -m) == 'arm64' ]]; then
+	# install rosetta which is still needed for some docker features
+	softwareupdate --install-rosetta
+fi
+
 # tooling stuff
 brew install postgresql \
 	postgis \
@@ -61,59 +74,51 @@ brew install postgresql \
 	tldr \
 	thefuck \
 	tmux \
-	firebase-cli \
-	heroku \
-	awscli \
 	jenv \
-	pgcli \
 	imagemagick \
-	pygments \
 	jq \
 	r \
 	maven \
-	pidcat \
+	gradle \
 	nvm \
+	pyenv \
 	ripgrep \
 	bat \
 	tree \
 	fswatch \
-	sphinx-doc \
-	ncdu
+	ncdu \
+	heroku \
+	awscli \
+	firebase-cli \
+	google-cloud-sdk
 
 # apps:
 brew install iterm2 \
-	intellij-idea \
+	jetbrains-toolbox \
 	google-chrome \
 	spotify \
+	qgis \
 	visual-studio-code \
 	typora \
 	iina \
-	alfred \
 	1password \
 	yandex-disk \
 	postman \
 	karabiner-elements \
-	qgis \
 	hammerspoon \
-	adobe-creative-cloud \
 	calibre \
 	transmission \
-	skype \
 	google-drive-file-stream \
 	bitbar \
-	adoptopenjdk8 \
 	rstudio
 
 # ql plugins
 brew cask install quickgeojson \
-	qlcolorcode $(#syntax highlighting` \
-		qlstephen
-	) \
+	qlcolorcode \
+	qlstephen \
 	qlmarkdown \
-	betterzip # README and other extension-less files` \
-
-# google cloud command line tools
-brew install google-cloud-sdk
+	quicklook-json \
+	betterzip # README and other extension-less files`
 
 # use system node version per default
 nvm alias default system
