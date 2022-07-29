@@ -33,6 +33,7 @@ ln -s ~/config/dotfiles/karabiner .config/karabiner
 ln -s ~/config/dotfiles/env.zsh ~/env.zsh
 ln -s ~/config/dotfiles/bitbar ~/.bitbar
 ln -s ~/config/dotfiles/.hammerspoon ~/.hammerspoon
+ln -s ~/config/dotfiles/.aria2 ~/.aria2
 
 # private dotfiles
 mkdir ~/config/private
@@ -97,7 +98,9 @@ brew install postgresql \
 	heroku \
 	awscli \
 	firebase-cli \
-	google-cloud-sdk
+	google-cloud-sdk \
+	awslogs \
+	youtube-dl
 
 # apps:
 brew install iterm2 \
@@ -123,10 +126,17 @@ brew install iterm2 \
 	whatsapp \
 	microsoft-office \
 	zotero \
-	anki
+	anki \
+	gh \
+	thunderbird \
+	cyberduck \
+	discord \
+	figma
+
+brew install --cask docker
 
 # ql plugins
-brew cask install quickgeojson \
+brew install --cask quickgeojson \
 	qlcolorcode \
 	qlstephen \
 	qlmarkdown \
@@ -134,6 +144,7 @@ brew cask install quickgeojson \
 	betterzip # README and other extension-less files`
 
 # use system node version per default
+mkdir ~/.nvm
 nvm alias default system
 
 # npm packages
@@ -158,14 +169,18 @@ cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
 
 # jenv config
 # might be a different version now
-jenv add /Library/Java/JavaVirtualMachines/openjdk-13.0.2.jdk/Contents/Home
-jenv add jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
-jenv global 1.8
+# setup java from openjdk
+brew install --cask temurin8
+brew install --cask temurin11
+brew install --cask temurin
+jenv add $(/usr/libexec/java_home -v1.8)
+jenv add $(/usr/libexec/java_home -v11)
+jenv global 11
 jenv enable-plugin maven
 jenv enable-plugin export
 
 # fonts
-brew cask install font-firacode-nerd-font-mono
+brew install font-Fira-Code-nerd-font
 
 # login to cli tools
 heroku login
