@@ -13,6 +13,7 @@ brew tap homebrew/cask-fonts
 brew tap osgeo/osgeo4mac
 brew tap heroku/brew
 brew tap homebrew/cask-versions
+brew tap homebrew/services
 
 # general mac setup
 brew install git
@@ -33,6 +34,9 @@ ln -s ~/config/dotfiles/karabiner .config/karabiner
 ln -s ~/config/dotfiles/env.zsh ~/env.zsh
 ln -s ~/config/dotfiles/bitbar ~/.bitbar
 ln -s ~/config/dotfiles/.hammerspoon ~/.hammerspoon
+ln -s ~/config/apps/iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+# see https://www.kuda.ai/blog/iterm2#use-the-minimal-theme-for-a-better-look-of-the-top-bar-and-your-tabs
+ln -s ~/config/apps/espanso ~/Library/Application\ Support/espanso
 
 # private dotfiles
 mkdir ~/config/private
@@ -66,7 +70,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
 	# install rosetta which is still needed for some docker features
 	softwareupdate --install-rosetta
 
-	brew install utm
+	# brew install utm
 fi
 
 # tooling stuff
@@ -81,6 +85,7 @@ brew install postgresql \
 	tmux \
 	jenv \
 	imagemagick \
+	ffmpeg \
 	jq \
 	r \
 	maven \
@@ -106,29 +111,29 @@ brew install iterm2 \
 	spotify \
 	qgis \
 	visual-studio-code \
-	typora \
 	iina \
+	obsidian \
 	1password \
 	yandex-disk \
 	postman \
+	drawio \
 	karabiner-elements \
-	hammerspoon \
 	calibre \
-	transmission \
-	google-drive-file-stream \
+	transmission-cli \
+	google-drive \
 	bitbar \
+	espanso \
 	surfshark \
-	rstudio \
-	zoom \
 	whatsapp \
 	microsoft-office \
 	zotero \
 	anki
 
+# fonts
+brew install --cask font-fira-code-nerd-font
+
 # ql plugins
-brew cask install quickgeojson \
-	qlcolorcode \
-	qlstephen \
+brew install \
 	qlmarkdown \
 	quicklook-json \
 	betterzip # README and other extension-less files`
@@ -139,21 +144,21 @@ nvm alias default system
 # npm packages
 npm install -g geojsonio-cli
 npm install -g @mapbox/polyline
-npm install -g gjv
-npm install -g localtunnel
-npm install -g md-to-pdf
+# npm install -g gjv
+# npm install -g localtunnel
+# npm install -g md-to-pdf
 
-# configure localtunnel to lct to work with default zsh aliases
-mv /usr/local/bin/lt /usr/local/bin/lct
-echo '#!/bin/bash' >~/config/private/exports.sh
+# # configure localtunnel to lct to work with default zsh aliases
+# mv /usr/local/bin/lt /usr/local/bin/lct
+# echo '#!/bin/bash' >~/config/private/exports.sh
 
 # configure git ll alias for fzf_git_log function
 git config --global alias.ll 'log --graph --format="%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
 
 # alfred (without brew)
-curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg >alfred.dmg
-open alfred.dmg
-cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
+# curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg >alfred.dmg
+# open alfred.dmg
+# cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
 # then copy the license key data in there and import settings from old machine.
 
 # jenv config
@@ -163,9 +168,6 @@ jenv add jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/
 jenv global 1.8
 jenv enable-plugin maven
 jenv enable-plugin export
-
-# fonts
-brew cask install font-firacode-nerd-font-mono
 
 # login to cli tools
 heroku login

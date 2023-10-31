@@ -1,0 +1,46 @@
+# taken from https://forum.obsidian.md/t/fun-with-espanso/2317
+
+matches:
+
+# Breadcrumb
+  - trigger: ":bc"
+    word: true
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo `date -v -1d \"+[[%Y-%m-%d|<< Yesterday]]\"`' | [['`date \"+%Y-CW%U|CW%U\"`']], '`date +%A`',  | '`date -v +1d \"+[[%Y-%m-%d|Tommorrow >>]]\"`"
+          shell: bash
+
+# Meeting
+  - trigger: ":meet"
+    word: true
+    replace: |
+             ## 0000 Meeting
+             - Tags:
+             Attendees:
+             Tasks:
+             Notes:
+
+# Next Week
+  - triggers: [ ":>w", ":>mon" ]
+    word: true
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo `date -v +Mon \"+[[%Y-%m-%d]]\"`"
+          shell: bash
+
+# Next Friday
+  - trigger: ":>fri"
+    word: true
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo `date -v +Fri \"+[[%Y-%m-%d]]\"`"
+          shell: bash
