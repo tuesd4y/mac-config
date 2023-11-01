@@ -37,6 +37,9 @@ ln -s ~/config/dotfiles/.hammerspoon ~/.hammerspoon
 ln -s ~/config/apps/iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 # see https://www.kuda.ai/blog/iterm2#use-the-minimal-theme-for-a-better-look-of-the-top-bar-and-your-tabs
 ln -s ~/config/apps/espanso ~/Library/Application\ Support/espanso
+ln -s ~/config/private/ssh ~/.ssh
+ln -s ~/docs/obsidian/attachments ~/Library/Mobile\ Documents/com~apple~CloudDocs/obsidian/tuesd4y/attachments.nosync
+
 
 # private dotfiles
 mkdir ~/config/private
@@ -62,6 +65,7 @@ ln -s ~/docs ~/Documents
 mkdir ~/docs/uni
 mkdir ~/docs/triply
 mkdir ~/docs/personal
+mkdir -p ~/docs/obsidian/attachments
 
 mkdir ~/.envs
 

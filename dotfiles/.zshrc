@@ -16,7 +16,7 @@ antigen bundle git-extras
 antigen bundle gradle
 antigen bundle virtualenv
 antigen bundle npm
-antigen bundle docker
+# antigen bundle docker
 
 antigen bundle Tarrasch/zsh-autoenv
 antigen bundle zsh-users/zsh-autosuggestions
