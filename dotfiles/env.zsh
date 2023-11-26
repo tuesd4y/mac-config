@@ -209,9 +209,6 @@ eval "$(pyenv init -)"
 # Custom SERVER_URL setup script
 # source ~/config/private/export.sh
 
-# setup ruby from asdf on path
-. $(brew --prefix asdf)/asdf.sh
-
 alias yta='youtube-dl --ignore-config -x'
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"

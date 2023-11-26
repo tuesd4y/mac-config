@@ -16,7 +16,7 @@ antigen bundle git-extras
 antigen bundle gradle
 antigen bundle virtualenv
 antigen bundle npm
-antigen bundle docker
+# antigen bundle docker
 
 antigen bundle Tarrasch/zsh-autoenv
 antigen bundle zsh-users/zsh-autosuggestions
@@ -47,7 +47,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # pymoodle autocompletion (Luis)
-eval "$(register-python-argcomplete pymoodle)"
+# eval "$(register-python-argcomplete pymoodle)"
 
 # added by travis gem
 [ ! -s /Users/dev/.travis/travis.sh ] || source /Users/dev/.travis/travis.sh
@@ -60,3 +60,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # export DOCKER_CERT_PATH=$HOME/.docker/
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+change_color_preset() { echo -e "\033]1337;SetColors=preset=$1\a" }
+dark() { change_color_preset "rose-pine (1)" }
+light() { change_color_preset "rose-pine-dawn (1)" }
