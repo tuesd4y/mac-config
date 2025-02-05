@@ -109,7 +109,9 @@ brew install postgresql \
 	firebase-cli \
 	google-cloud-sdk \
 	awslogs \
-	youtube-dl
+	youtube-dl \
+	dasel \
+	exiftool
 
 # apps:
 brew install iterm2 \

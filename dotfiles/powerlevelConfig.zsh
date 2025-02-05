@@ -60,4 +60,4 @@ POWERLEVEL9K_BATTERY_VERBOSE=true
 
 # Prompt elements
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_user dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs battery)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(anaconda nvm background_jobs)

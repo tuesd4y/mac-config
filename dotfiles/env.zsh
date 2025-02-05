@@ -174,6 +174,8 @@ alias ql='qlmanage -p "$@" >& /dev/null'
 alias build='./gradlew build'
 alias pyg=/usr/local/Cellar/pygments/2.4.2_1/bin/pygmentize
 
+alias pull='gh pr checkout'
+
 alias pk=pagekite.py
 
 hi() {
@@ -213,3 +215,5 @@ alias yta='youtube-dl --ignore-config -x'
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 autoload -U bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C '/opt/homebrew/bin/aws_completer' aws
