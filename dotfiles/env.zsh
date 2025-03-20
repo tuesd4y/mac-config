@@ -200,6 +200,8 @@ export PATH="/usr/local/opt/gettext/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/gettext/lib"
 export CPPFLAGS="-I/usr/local/opt/gettext/include"
 
+export PATH="/Users/dev/opt/pdfannots2json:$PATH"
+
 # add config/scripts to path
 export PATH="/Users/dev/config/scripts:$PATH"
 
@@ -209,8 +211,11 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 # Custom SERVER_URL setup script
-# source ~/config/private/export.sh
+source /Users/dev/config/private/exports.sh
 
+alias nx="npm run nx --"
+alias upload_data="rclone --config rclone.conf copy data proj-data:data --progress --transfers=40 --checkers=40 --tpslimit=10 --drive-chunk-size=1M --max-backlog 200000"
+alias download_data="rclone --config rclone.conf copy proj-data:data data --progress --transfers=40 --checkers=40 --tpslimit=10 --drive-chunk-size=1M --max-backlog 200000"
 alias yta='youtube-dl --ignore-config -x'
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"

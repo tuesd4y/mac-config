@@ -175,25 +175,10 @@ else
 fi
 unset __conda_setup
 
-if [ -f "/Users/dev/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/Users/dev/mambaforge/etc/profile.d/mamba.sh"
-fi
-# <<< conda initialize <<<
-
-
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba shell init' !!
-export MAMBA_EXE='/Users/dev/mambaforge/bin/mamba';
-export MAMBA_ROOT_PREFIX='/Users/dev/mambaforge';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/dev/.cache/lm-studio/bin"
-alias nx="npm run nx --"
+
+export PATH="$PATH:/Users/dev/opt/ijhttp"
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+zstyle ':completion:*' menu select
