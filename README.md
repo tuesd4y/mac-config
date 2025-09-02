@@ -76,3 +76,16 @@ vim + usage for markdown editing
 https://github.com/Vonng/Capslock
 
 https://github.com/gpakosz/.tmux
+
+## doom emacs setup
+More info on their [github repo](https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#on-macos)
+
+```bash
+brew install git ripgrep
+# optional dependencies
+brew install coreutils fd
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --with-native-compilation --with-modules
+git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+```

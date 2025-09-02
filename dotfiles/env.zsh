@@ -2,6 +2,7 @@
 ###    general path setup   ###
 ###############################
 export PATH="$PATH:/usr/local/anaconda3"
+export PATH="$PATH:/Users/dev/opt/mcp-grafana"
 export PATH="$HOME/.jenv/bin:$PATH"
 export WORKON_HOME=~/.envs
 export USER_HOME=/Users/dev
@@ -217,8 +218,6 @@ alias nx="npm run nx --"
 alias upload_data="rclone --config rclone.conf copy data proj-data:data --progress --transfers=40 --checkers=40 --tpslimit=10 --drive-chunk-size=1M --max-backlog 200000"
 alias download_data="rclone --config rclone.conf copy proj-data:data data --progress --transfers=40 --checkers=40 --tpslimit=10 --drive-chunk-size=1M --max-backlog 200000"
 alias yta='youtube-dl --ignore-config -x'
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 autoload -U bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 complete -C '/opt/homebrew/bin/aws_completer' aws

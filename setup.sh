@@ -39,6 +39,7 @@ ln -s ~/config/apps/iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.
 ln -s ~/config/apps/espanso ~/Library/Application\ Support/espanso
 ln -s ~/config/private/ssh ~/.ssh
 ln -s ~/docs/obsidian/attachments ~/Library/Mobile\ Documents/com~apple~CloudDocs/obsidian/tuesd4y/attachments.nosync
+ln -s /Users/dev/config/apps/doom /Users/dev/.config/doom
 
 ln -s ~/config/dotfiles/.aria2 ~/.aria2
 
@@ -148,7 +149,7 @@ brew install --cask font-fira-code-nerd-font
 # ql plugins
 brew install --cask quickgeojson \
 	qlcolorcode \
-	qlstephen \
+	qlstephen
 brew install \
 	qlmarkdown \
 	quicklook-json \
@@ -173,20 +174,16 @@ npm install -g @mapbox/polyline
 git config --global alias.ll 'log --graph --format="%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
 
 # alfred (without brew)
-# curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg >alfred.dmg
-# open alfred.dmg
-# cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
+curl https://cachefly.alfredapp.com/Alfred_3.8.6_972.dmg > alfred.dmg
+open alfred.dmg
+cp -a /Volumes/Alfred/Alfred\ 3.app /Applications/Alfred.app
 # then copy the license key data in there and import settings from old machine.
 
 # jenv config
 # might be a different version now
 # setup java from openjdk
-brew install --cask temurin8
-brew install --cask temurin11
 brew install --cask temurin
-jenv add $(/usr/libexec/java_home -v1.8)
-jenv add $(/usr/libexec/java_home -v11)
-jenv global 11
+jenv global 21
 jenv enable-plugin maven
 jenv enable-plugin export
 

@@ -17,7 +17,7 @@
 # toggle_key: ALT
 # You can also disable the toggle key completely with
 # toggle_key: OFF
-toggle_key: CTRL
+toggle_key: OFF
 
 # --- Injection Backend
 
@@ -39,3 +39,6 @@ toggle_key: CTRL
 # clipboard_threshold: 100
 
 # For a list of all the available options, visit the official docs at: https://espanso.org/docs/
+
+# custom search shortcut
+search_shortcut: ALT+SHIFT+SPACE

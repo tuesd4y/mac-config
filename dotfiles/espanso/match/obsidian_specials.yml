@@ -5,18 +5,16 @@ matches:
 
 # Breadcrumb
   - trigger: ":bc"
-    word: true
     replace: "{{output}}"
     vars:
       - name: output
         type: shell
         params:
-          cmd: "echo `date -v -1d \"+[[%Y-%m-%d|<< Yesterday]]\"`' | [['`date \"+%Y-CW%U|CW%U\"`']], '`date +%A`',  | '`date -v +1d \"+[[%Y-%m-%d|Tommorrow >>]]\"`"
+          cmd: "echo `date -v -1d \"+[[%Y-%m-%d|<< Yesterday]]\"`' | [['`date \"+%Y-CW%U|CW%U\"`']], '`date +%A`' | '`date -v +1d \"+[[%Y-%m-%d|Tomorrow >>]]\"`"
           shell: bash
 
 # Meeting
   - trigger: ":meet"
-    word: true
     replace: |
              ## 0000 Meeting
              - Tags:
@@ -26,7 +24,6 @@ matches:
 
 # Next Week
   - triggers: [ ":>w", ":>mon" ]
-    word: true
     replace: "{{output}}"
     vars:
       - name: output
@@ -54,7 +51,6 @@ matches:
         type: "clipboard"
 
   - trigger: ":lg"
-    word: true
     replace: "Liebe Grüße, \nChris Stelzmüller"
 
          

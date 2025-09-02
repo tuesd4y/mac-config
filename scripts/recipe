@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# usage: recipe <url>
+
+if [ -z "$1" ]; then
+    echo "Error: URL parameter is required."
+    exit 1
+fi
+
+# Uses n8n workflow to create a recipe from an URL
+curl -u "webhook-chris:fixated-garza-allah-BOWED" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data "{\"link\":\"$1\"}" \
+  https://n8n.tuesd4y.com/webhook/cfe1f60a-b647-4a11-aebf-a9046a363c2b

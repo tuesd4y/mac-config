@@ -24,7 +24,6 @@ antigen bundle git-extras
 antigen bundle gradle
 antigen bundle virtualenv
 antigen bundle npm
-antigen bundle brew
 antigen bundle web-search
 # antigen bundle docker
 
@@ -161,6 +160,9 @@ export STORYBOOK_FIGMA_ACCESS_TOKEN=
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# doom emacs
+export PATH="$PATH:$HOME/.config/emacs/bin"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/dev/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -182,3 +184,13 @@ export PATH="$PATH:/Users/dev/opt/ijhttp"
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
 zstyle ':completion:*' menu select
+export PATH="/Users/dev/.pixi/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/dev/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dev/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/dev/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dev/opt/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

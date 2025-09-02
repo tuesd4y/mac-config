@@ -22,8 +22,6 @@ require 'pathname'
 SCRIPT_PATH = Pathname.new($0).realpath()
 BREW = "/opt/homebrew/bin/brew"
 BREW_LINK = "http://brew.sh/"
-BREW_SERVICES = "/opt/Homebrew/Library/Taps/homebrew/homebrew-services/cmd/services.rb"
-BREW_SERVICES_LINK = "https://github.com/Homebrew/homebrew-services"
 
 REFRESH = "---\nRefresh | refresh=true"
 
@@ -39,15 +37,6 @@ if !File.exist?(BREW)
     "Homebrew not installed | color=red",
     "---",
     "Install Homebrew... | href=#{BREW_LINK}",
-    REFRESH,
-  ].join("\n")
-  exit(1)
-end
-if !File.exist?(BREW_SERVICES)
-  puts [
-    "Homebrew Services not installed | color=red",
-    "---",
-    "Install Homebrew Services... | href=#{BREW_SERVICES_LINK}",
     REFRESH,
   ].join("\n")
   exit(1)
