@@ -106,17 +106,11 @@
 (define-key global-map "\C-ca" 'org-agenda)
 
 
-;; Hide the markers so you just see bold text as BOLD-TEXT and not *BOLD-TEXT*
-(setq org-hide-emphasis-markers t)
-
-
 ;; custom TODO states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "IN-PROGRESS(i@/!)" "VERIFYING(v!)" "BLOCKED(b@)" "IDEA(d)" "|" "DONE(d!)" "WONT-DO(w@/!)")
-        ))
-
-;; TODO colors
-(setq org-todo-keyword-faces
+        )
+      org-todo-keyword-faces
       '(
         ("TODO" . (:foreground :weight bold, (doom-color 'blue)))
         ("IN-PROGRESS" . (:foreground "Cyan" :weight bold))
@@ -125,10 +119,17 @@
         ("IDEA" . (:foreground "DeepPink" :weight bold))
         ("DONE" . (:foreground :weight bold, (doom-color 'green)))
         ("WONT-DO" . (:foreground :weight bold, (doom-color 'red)))
-        ))
+        )
+      org-id-link-to-org-use-id t
+      org-startup-with-inline-images t
+      org-fold-core-style 'overlays
+      ;; default width for all images
+      ;; see https://stackoverflow.com/questions/11670654/how-to-resize-images-in-org-mode
+      org-image-max-width 300
 
-(setq org-id-link-to-org-use-id t
-      org-startup-with-inline-images t)
+      ;; Hide the markers so you just see bold text as BOLD-TEXT and not *BOLD-TEXT*
+      org-hide-emphasis-markers t
+      )
 
 (use-package! org-roam
   :defer t
@@ -153,8 +154,6 @@
               #'org-roam-reflinks-section
               #'org-roam-unlinked-references-section)))
 
-
-(setq org-fold-core-style 'overlays)
 
 (unless (equal "Battery status not available"
                (battery))
@@ -182,6 +181,78 @@
 
 (add-hook 'dired-mode-hook 'org-download-enable)
 
+
+;; mermaid charts in babel, from https://github.com/arnm/ob-mermaid
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t))
+    )
+
+;;
+;; clean up hyperbole keymap
+;; https://emacs.stackexchange.com/questions/75055/hyperbole-mode-overrides-org-mode-c-c-binding
+(defun my/hyperbole-disable-key-bindings-after-init-hook ()
+  (define-key hyperbole-mode-map (kbd "C-c /") nil)
+  (define-key hyperbole-mode-map (kbd "M-o") nil)
+  )
+;;
+;;
+;; custom links for JIRA issues
+;; as seen on https://www.beorgapp.com/blog/hyperbole-implicit-buttons/;;
+(use-package! hyperbole
+  :ensure t
+  :init
+  (add-hook 'after-init-hook #'hyperbole-mode)
+  :config
+  (add-hook 'after-init-hook #'my/hyperbole-disable-key-bindings-after-init-hook t)
+
+  ;; --- Config ---
+  (defvar my/jira-project-prefixes '("TPS")
+    "List of JIRA project keys to match, e.g. \'(\"TPS\" \"DEV\").")
+
+  (defvar my/jira-cs-browse-url "https://triply.atlassian.net/browse/"
+    "Base URL for JIRA tickets.")
+
+  ;; Build regexes once
+  (defun my/jira--regex ()
+    "Plain (no capture) regex for any configured JIRA key."
+    (concat "\\<" (regexp-opt my/jira-project-prefixes t) "-[0-9]+\\>"))
+
+  (defun my/jira--regex-grouped ()
+    "Regex with a single capturing group around the whole ticket."
+    (concat "\\(" (my/jira--regex) "\\)"))
+
+  ;; --- Action: open ticket ---
+  (defun my/jira-cs-reference (jira-id)
+    (browse-url (concat my/jira-cs-browse-url jira-id)))
+
+  ;; --- Hyperbole implicit button ---
+  (defib my/jira-cs ()
+    "Make things like TPS-1234 clickable via Hyperbole."
+    (let* ((case-fold-search t)
+           (re (my/jira--regex-grouped)))
+      (when (or (looking-at re)
+                (save-excursion
+                  (skip-chars-backward "[:alnum:]-")
+                  (looking-at re)))
+        (let ((id (match-string-no-properties 1)))
+          (ibut:label-set id (match-beginning 1) (match-end 1))
+          (hact 'my/jira-cs-reference id)))))
+
+  ;; --- Highlighting ---
+  (defface my/jira-issue-face
+    '((t :background "light yellow" :underline t :weight bold))
+    "Face for JIRA issue references.")
+
+  (defun my/jira-add-highlighting ()
+    (font-lock-add-keywords
+     nil `((,(my/jira--regex) 0 'my/jira-issue-face prepend)) 'append))
+
+  (dolist (hook '(org-mode-hook text-mode-hook prog-mode-hook))
+    (add-hook hook #'my/jira-add-highlighting))
+  )
+
+
 ;; custom colors for different links
 (defconst my/org-link-colors
   '(("http"  . blue)
@@ -203,17 +274,3 @@
                      :background ,(doom-color color))))))
 
 (after! org (my/org-apply-link-colors))
-
-;; default width for all images
-;; see https://stackoverflow.com/questions/11670654/how-to-resize-images-in-org-mode
-(setq org-image-max-width 300)
-
-
-;; custom css for exports
-
-
-;; configure tree display sidebar for org files
-;; M-x org-side-tree to show
-;; (setq
-;; org-side
-;;  )

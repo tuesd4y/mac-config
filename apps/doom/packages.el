@@ -54,3 +54,8 @@
 (package! org-download)
 ;; see outline of org mode file quickly
 (package! org-side-tree)
+
+(package! hyperbole )
+
+;; mermaid charts in babel source blocks
+(package! ob-mermaid)

@@ -217,3 +217,12 @@ pyenv global 3.8.1 jupyter3
 
 pip install virtualenv
 pip install virtualenvwrapper
+
+brew install syncthing
+brew services start syncthing
+brew install --cask tailscale
+brew tap railwaycat/emacsmacport
+brew install emacs-mac
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+brew install font-iosevka-nerd-font
