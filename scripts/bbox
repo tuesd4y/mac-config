@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_NAME="$(basename "$0")"
+
+usage() {
+  cat <<EOF
+Create a WGS84 (EPSG:4326) bounding box around a center point
+with a square edge length in kilometers.
+
+Usage:
+  $SCRIPT_NAME <lat> <lon> <edge_km>
+  $SCRIPT_NAME --help
+
+Arguments:
+  lat        Center latitude in degrees (WGS84)
+  lon        Center longitude in degrees (WGS84)
+  edge_km    Edge length of the square in kilometers
+
+Output:
+  minLon,minLat,maxLon,maxLat
+
+Example:
+  $SCRIPT_NAME 48.2082 16.3738 10
+  → 16.3019,48.1630,16.4457,48.2534
+
+Notes:
+  - Uses an approximation:
+      1° latitude ≈ 110.574 km
+      1° longitude ≈ 111.320 km * cos(latitude)
+  - Accurate for small areas and away from the poles
+  - CRS: EPSG:4326 (WGS84)
+EOF
+}
+
+# --help / -h
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+  usage
+  exit 0
+fi
+
+# Check argument count
+if [[ $# -ne 3 ]]; then
+  echo "Error: missing or invalid arguments" >&2
+  echo >&2
+  usage >&2
+  exit 1
+fi
+
+lat="$1"
+lon="$2"
+edge_km="$3"
+
+# Basic numeric validation
+for v in "$lat" "$lon" "$edge_km"; do
+  if ! [[ "$v" =~ ^-?[0-9]+([.][0-9]+)?$ ]]; then
+    echo "Error: all arguments must be numeric" >&2
+    exit 1
+  fi
+done
+
+if (( $(echo "$edge_km <= 0" | bc -l) )); then
+  echo "Error: edge_km must be > 0" >&2
+  exit 1
+fi
+
+half_km=$(echo "$edge_km / 2" | bc -l)
+
+# Degrees per km (approximation)
+deg_lat=$(echo "$half_km / 110.574" | bc -l)
+cos_lat=$(echo "c($lat * 0.017453292519943295)" | bc -l)
+deg_lon=$(echo "$half_km / (111.320 * $cos_lat)" | bc -l)
+
+min_lat=$(echo "$lat - $deg_lat" | bc -l)
+max_lat=$(echo "$lat + $deg_lat" | bc -l)
+min_lon=$(echo "$lon - $deg_lon" | bc -l)
+max_lon=$(echo "$lon + $deg_lon" | bc -l)
+
+printf "%.8f,%.8f,%.8f,%.8f\n" \
+  "$min_lon" "$min_lat" "$max_lon" "$max_lat"
