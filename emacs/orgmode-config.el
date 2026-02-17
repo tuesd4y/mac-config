@@ -185,7 +185,7 @@ org-todo-keywords
 
         )
 
-  (set-face-attribute 'org-document-title nil :font "Helvetica Neue" :weight 'bold :height 1.3)
+  (set-face-attribute 'org-document-title nil :font "Helvetica Neue" :weight 'bold :height 1.5)
   (dolist (face '((org-level-1 . 1.2)
                   (org-level-2 . 1.1)
                   (org-level-3 . 1.05)
@@ -370,6 +370,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
+	 ("C-c n s" . org-roam-db-sync)
          ;; Dailies
          ("C-c n j" . org-roam-dailies-capture-today))
   :init
@@ -380,10 +381,16 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-roam-db-autosync-mode)
 
   (setq org-roam-capture-templates
-        '(
+	'(
 	  ("c" "default" plain "%?"
-         :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
-         :unnarrowed t)
+           :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+           :unnarrowed t)
+	  ("p" "project" plain (file "~/org/templates/project.org")
+           :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+           :unnarrowed t)
+	  ("s" "source / paper" plain (file "~/org/templates/paper.org")
+           :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+           :unnarrowed t)
    ))
 
 )
@@ -431,4 +438,42 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          (let ((org-link-frame-setup (cons (cons 'file 'find-file) org-link-frame-setup)))
            (org-open-at-point)))                                                          
        (define-key global-map (kbd "C-o") #'mda/org-open-current-window) (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)
+
+;; custom configuration for org roam + zotero bibtex
+					; see more details here: https://daryl.wakatara.com/zotero-and-org-roam-academic-research-workflow/
+
+(use-package org-ref
+  :straight t
+  :config
+  (setq bibtex-completion-bibliography '("~/org/refs/zotero.bib")
+        bibtex-completion-notes-path "~/org/refs/notes"
+        bibtex-completion-pdf-field "file"
+        bibtex-completion-pdf-opn-function
+        (lambda (fpath)
+          (call-process "open" nil 0 nil fpath))))
+
+(use-package ivy-bibtex
+  :straight t
+  :after org-ref)
+
+(use-package org-roam-bibtex
+  :straight t
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config
+  (require 'org-ref)
+  
+  )
+
+;; jira org config
+(use-package org-jira
+  :ensure t
+  :after org
+  :config
+  (setq jiralib-url "https://triply.atlassian.net")
+  (setq org-jira-working-dir "~/org/jira")
+  (setq auth-sources '("~/.authinfo"))
+  )
+
+
 

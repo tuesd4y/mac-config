@@ -6,7 +6,9 @@
 (use-package ivy
   :diminish
   :bind (:map ivy-minibuffer-map
-         ("C-m" . ivy-alt-done))
+              ("C-m" . ivy-alt-done)
+	      ("M-<return>" . ivy-immediate-done)
+	      )
   :init
   (ivy-mode 1)
   :config
@@ -87,3 +89,7 @@
   :after prescient
   :config
   (ivy-prescient-mode 1))
+
+(with-eval-after-load 'ivy
+  (define-key ivy-minibuffer-map (kbd "M-RET") #'ivy-immediate-done))
+

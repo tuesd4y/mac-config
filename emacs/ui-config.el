@@ -226,3 +226,5 @@ Optionally specify WEIGHT and HEIGHT."
 (use-package emojify
   :hook (org-mode . emojify-mode)
   :commands emojify-mode)
+
+(set-face-attribute 'default nil :height 160)

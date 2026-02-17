@@ -47,6 +47,8 @@
 ;; Install use-package
 (straight-use-package 'use-package)
 
+(setq straight-use-package-by-default t)
+
 ;; Install use-package-ensure-system-package first to ensure keyword extensions work
 ;;(straight-use-package 'use-package-ensure-system-package)
 
