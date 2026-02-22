@@ -186,14 +186,14 @@ org-todo-keywords
         )
 
   (set-face-attribute 'org-document-title nil :font "Helvetica Neue" :weight 'bold :height 1.5)
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
+  (dolist (face '((org-level-1 . 1.4)
+                  (org-level-2 . 1.35)
+                  (org-level-3 . 1.35)
+                  (org-level-4 . 1.3)
+                  (org-level-5 . 1.2)
+                  (org-level-6 . 1.2)
+                  (org-level-7 . 1.2)
+                (org-level-8 . 1.2)))
     (set-face-attribute (car face) nil :font "Helvetica Neue" :weight 'medium :height (cdr face)))
 
 
@@ -372,7 +372,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c n c" . org-roam-capture)
 	 ("C-c n s" . org-roam-db-sync)
          ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
+         ("C-c n j" . org-roam-dailies-capture-today)
+	 ("C-c n t" . org-roam-dailies-goto-today))
   :init
   (setq org-roam-v2-ack t
         org-roam-directory "~/org")
@@ -382,7 +383,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
   (setq org-roam-capture-templates
 	'(
-	  ("c" "default" plain "%?"
+	  ("d" "default" plain "%?"
            :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
            :unnarrowed t)
 	  ("p" "project" plain (file "~/org/templates/project.org")
@@ -391,6 +392,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 	  ("s" "source / paper" plain (file "~/org/templates/paper.org")
            :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
            :unnarrowed t)
+	  ("c" "Contact" entry "* %{title}\n:PROPERTIES:\n:EMAIL: %^{Email}\n:END:\n- %?"
+           ;; target the heading with specific ID
+           :target (file+olp-id "triply-general.org" "89B06A99-9FAE-4518-91ED-1FE6F477CB2C")
+	   :unnarrowed t
+           :empty-lines 1)
    ))
 
 )
@@ -466,14 +472,42 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   )
 
 ;; jira org config
-(use-package org-jira
-  :ensure t
-  :after org
-  :config
-  (setq jiralib-url "https://triply.atlassian.net")
-  (setq org-jira-working-dir "~/org/jira")
-  (setq auth-sources '("~/.authinfo"))
-  )
+;; (use-package org-jira
+;;   :ensure t
+;;   :after org
+;;   :config
+;;   (setq jiralib-url "https://triply.atlassian.net")
+;;   (setq org-jira-working-dir "~/org/jira")
+;;   (setq auth-sources '("~/.authinfo"))
+;;   )
 
 
+;; automatically configure org export location
+(defun my/org-export-output-file-name (orig-fun extension &optional subtreep pub-dir)
+  (let ((pub-dir (expand-file-name "~/docs/org")))
+    (unless (file-directory-p pub-dir)
+      (make-directory pub-dir t))
+    (funcall orig-fun extension subtreep pub-dir)))
 
+(advice-add 'org-export-output-file-name :around #'my/org-export-output-file-name)
+
+(setq org-export-with-broken-links 'mark)
+
+
+;; org modern config
+(use-package org-modern
+	:straight t
+ :after org
+ )
+(with-eval-after-load 'org (global-org-modern-mode))
+
+;; Add frame borders and window dividers
+(modify-all-frames-parameters
+ '((right-divider-width . 40)
+   (internal-border-width . 40)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
