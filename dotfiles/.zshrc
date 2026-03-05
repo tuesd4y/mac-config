@@ -1,5 +1,3 @@
-zmodload zsh/zprof
-
 export TERM="xterm-256color"
 source ~/config/dotfiles/antigen.zsh
 export LC_ALL=en_US.UTF-8
@@ -44,5 +42,3 @@ else
 fi
 
 eval "$(starship init zsh)"
-
-zprof
