@@ -36,12 +36,19 @@ Optionally specify WEIGHT and HEIGHT."
                            "Times New Roman") 'variable-pitch)
 
 ;; Disable GUI elements for a cleaner interface
+(menu-bar-mode -1)             ;; no menu bar
+(tool-bar-mode -1)             ;; no toolbar
 (when (display-graphic-p)
   (setq use-dialog-box nil)      ;; no popups
-  (menu-bar-mode -1)             ;; no menu bar
-  (tool-bar-mode -1)             ;; no toolbar
   (scroll-bar-mode -1)           ;; no scrollbars
   (tooltip-mode -1))             ;; no tooltips
+
+;; In terminal mode, let the terminal control the background color
+(unless (display-graphic-p)
+  (set-face-background 'default "nil")
+  (set-face-background 'fringe "nil")
+  (set-face-background 'line-number "nil")
+  (set-face-background 'line-number-current-line "nil"))
 
 ;; Prettier frame appearance
 (set-frame-parameter (selected-frame) 'internal-border-width 15)
