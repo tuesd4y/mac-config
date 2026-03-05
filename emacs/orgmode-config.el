@@ -274,6 +274,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          "* [[%:link][%:description]]\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
 	("C" "org-capture unselected" entry (file ,(concat org-directory "captured.org"))
          "* %? [[%:link][%:description]] \nCaptured On: %U")
+        ("n" "New Contact" entry
+         (id "088FA2E2-2AE9-410B-8C9E-70FE62E5CE82")
+         "* %^{Name}\n:PROPERTIES:\n:ID: %(org-id-new)\n:EMAIL: %^{Email}\n:PHONE: %^{Phone}\n:COMPANY: %^{Company}\n:CAPTURED: %U\n:END:\n%?"
+         :empty-lines 1)
         ))
 
 
@@ -392,11 +396,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 	  ("s" "source / paper" plain (file "~/org/templates/paper.org")
            :if-new (file+head "roam/%<%Y%m%d>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
            :unnarrowed t)
-	  ("c" "Contact" entry "* %{title}\n:PROPERTIES:\n:EMAIL: %^{Email}\n:END:\n- %?"
-           ;; target the heading with specific ID
-           :target (file+olp-id "triply-general.org" "89B06A99-9FAE-4518-91ED-1FE6F477CB2C")
-	   :unnarrowed t
-           :empty-lines 1)
    ))
 
 )

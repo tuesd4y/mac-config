@@ -166,3 +166,16 @@
 
   ;; Add hook to enable desktop-save-mode after init
   (add-hook 'after-init-hook #'my/desktop-lazy-load))
+(put 'narrow-to-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-export-backends '(beamer html latex md odt)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
