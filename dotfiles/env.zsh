@@ -8,180 +8,6 @@ export WORKON_HOME=~/.envs
 export USER_HOME=/Users/dev
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(thefuck --alias)"
-eval "$(jenv init -)"
-
-# node version manager
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# autoloading nvm on .nvmrc found  
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
-
-# sphinx doc
-export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
-export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/openexr/lib/pkgconfig:/usr/local/opt/imath/lib/pkgconfig:$PKG_CONFIG_PATH"
-
-###############################
-###  optional android stuff ###
-###############################
-
-export ANT_HOME=/usr/local/opt/ant
-export MAVEN_HOME=/usr/local/opt/maven
-export GRADLE_HOME=/usr/local/opt/gradle
-export ANDROID_HOME=/usr/local/share/android-sdk
-export ANDROID_NDK_HOME=/usr/local/share/android-ndk
-export INTEL_HAXM_HOME=/usr/local/Caskroom/intel-haxm
-
-export PATH=$ANT_HOME/bin:$PATH
-export PATH=$MAVEN_HOME/bin:$PATH
-export PATH=$GRADLE_HOME/bin:$PATH
-export PATH=$ANDROID_HOME/tools:$PATH
-export PATH=$ANDROID_HOME/platform-tools:$PATH
-export PATH=$ANDROID_HOME/build-tools/29.0.3:$PATH
-
-###############################
-### helpful shell functions ###
-###############################
-
-# inspired by https://sourabhbajaj.com/mac-setup/iTerm/fzf.html
-
-# fd - cd to selected directory
-fzd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-    -o -type d -print 2>/dev/null | fzf +m) &&
-    cd "$dir"
-}
-
-# fh - search in your command history and execute selected command
-fh() {
-  eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
-}
-
-# ch - browse chrome history
-ch() {
-  local cols sep
-  cols=$((COLUMNS / 3))
-  sep='{::}'
-
-  cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
-
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-     from urls order by last_visit_time desc" |
-    awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-    fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
-}
-
-##############################
-## SOME MORE FUN WITH FZF ###
-##############################
-
-# blatantly stolen from https://bluz71.github.io/2018/11/26/fuzzy-finding-in-bash-with-fzf.html
-fzf_grep_edit() {
-  if [[ $# == 0 ]]; then
-    echo 'Error: search term was not provided.'
-    return
-  fi
-  local match=$(
-    rg --color=never --line-number "$1" |
-      fzf --no-multi --delimiter : \
-        --preview "bat --color=always --line-range {2}: {1}"
-  )
-  local file=$(echo "$match" | cut -d':' -f1)
-  if [[ -n $file ]]; then
-    if [[ $TYPORA == 1 ]]; then
-      open -a Typora "$file"
-    else
-      $EDITOR "$file" +$(echo "$match" | cut -d':' -f2)
-    fi
-  fi
-}
-
-alias fge='fzf_grep_edit'
-
-# search for md files in meetings folder with given content and open chosen with typora
-meetings() {
-  cd ~/docs/meetings/*.md
-  TYPORA="1"
-  echo "$1"
-  fzf_grep_edit "$1"
-  cd -
-}
-
-# browse git logs
-fzf_git_log() {
-  local selections=$(
-    git ll --color=always "$@" |
-      fzf --ansi --no-sort --no-height \
-        --preview "echo {} | grep -o '[a-f0-9]\{7\}' | head -1 |
-                       xargs -I@ sh -c 'git show --color=always @'"
-  )
-  if [[ -n $selections ]]; then
-    local commits=$(echo "$selections" | cut -d' ' -f2)
-    git show $commits
-  fi
-}
-alias gll='fzf_git_log'
-
-# transfer.sh file sharing
-transfer() {
-  if [ $# -eq 0 ]; then
-    echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
-    return 1
-  fi
-  tmpfile=$(mktemp -t transferXXX)
-  if tty -s; then
-    basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-    curl -w "\n" --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >>$tmpfile
-  else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >>$tmpfile; fi
-  cat $tmpfile
-  rm -f $tmpfile
-}
-
-#---
-#Useful aliases:
-## Open the passed file with typora
-## (should mainly be used as an alternative for editing markdown files)
-#---
-alias tp="open -a Typora"
-alias grad=./gradlew
-alias vg=geojsonio
-alias gjm='geojson-merge'
-alias rstudio='open -a RStudio'
-alias ql='qlmanage -p "$@" >& /dev/null'
-alias build='./gradlew build'
-alias pyg=/usr/local/Cellar/pygments/2.4.2_1/bin/pygmentize
-
-alias pull='gh pr checkout'
-
-alias pk=pagekite.py
-
-hi() {
-  cat $1 | pyg | less
-}
 
 ################################
 ### fixing noisy wget output ###
@@ -206,18 +32,33 @@ export PATH="/Users/dev/opt/pdfannots2json:$PATH"
 # add config/scripts to path
 export PATH="/Users/dev/config/scripts:$PATH"
 
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-# Custom SERVER_URL setup script
-source /Users/dev/config/private/exports.sh
-
 alias nx="npm run nx --"
 alias upload_data="rclone --config rclone.conf copy data proj-data:data --progress --transfers=40 --checkers=40 --tpslimit=10 --drive-chunk-size=1M --max-backlog 200000"
 alias download_data="rclone --config rclone.conf copy proj-data:data data --progress --transfers=40 --checkers=40 --tpslimit=10 --drive-chunk-size=1M --max-backlog 200000"
 alias yta='youtube-dl --ignore-config -x'
-autoload -U bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
-complete -C '/opt/homebrew/bin/aws_completer' aws
+
+# rust stuff
+export PATH="/Users/dev/.cargo/bin:$PATH"
+
+# external docker server
+# Replace $DOCKER_SERVER with the hostname or IP address of the server
+# export DOCKER_HOST=tcp://173.212.193.241:2376
+# export DOCKER_TLS_VERIFY=1
+# export DOCKER_CERT_PATH=$HOME/.docker/
+
+# yarn config
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# jenv config
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# gcloud cli
+if [ -f '/Users/dev/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dev/opt/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/dev/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dev/opt/google-cloud-sdk/completion.zsh.inc'; fi
+
+# claude code gcloud config
+export CLAUDE_CODE_USE_VERTEX=1  # claude-code-vertex-setup
+export CLOUDSDK_ACTIVE_CONFIG_NAME=claude-code  # claude-code-vertex-setup
+export CLOUD_ML_REGION=global  # claude-code-vertex-setup
+export ANTHROPIC_VERTEX_PROJECT_ID=vertex-ai-489209  # claude-code-vertex-setup
