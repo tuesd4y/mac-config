@@ -5,8 +5,6 @@ source ~/config/dotfiles/antigen.zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export ANTIGEN_LOG="/tmp/antigen.log"
-
 antigen use oh-my-zsh
 antigen bundle brew
 antigen bundle macos
