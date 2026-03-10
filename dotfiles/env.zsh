@@ -2,7 +2,6 @@
 ###    general path setup   ###
 ###############################
 export PATH="$PATH:/usr/local/anaconda3"
-export PATH="$PATH:/Users/dev/opt/mcp-grafana"
 export PATH="$HOME/.jenv/bin:$PATH"
 export WORKON_HOME=~/.envs
 export USER_HOME=/Users/dev
@@ -48,6 +47,9 @@ export PATH="/Users/dev/.cargo/bin:$PATH"
 
 # yarn config
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+
+source /Users/dev/config/private/exports.sh
 
 # jenv config
 export PATH="$HOME/.jenv/bin:$PATH"
