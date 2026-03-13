@@ -510,3 +510,36 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (face-spec-reset-face face)
   (set-face-foreground face (face-attribute 'default :background)))
 (set-face-background 'fringe (face-attribute 'default :background))
+
+;; copying screenshots with org-downoad
+;; source: https://karakeep.h.tuesd4y.com/dashboard/preview/oawvtgja6z3kw575k9w5w3i2
+
+;; insert from copied image: org-download-clipboard
+;; 
+(use-package org-download
+  :ensure  t
+    :after org
+    :defer nil
+    :hook (dired-mode . org-download-enable)
+    :hook (org-mode . org-download-enable)
+    :custom
+    (org-download-method 'directory)
+    (org-download-image-dir "~/org/img")
+    (org-download-heading-lvl 1)
+    (org-download-timestamp "%Y%m%d-%H%M%S_")
+    (org-image-actual-width 400)
+    (org-download-screenshot-method "screencapture -io %s")
+    (org-download-edit-cmd "open -n -a Preview %s")
+    :bind
+    ("C-$" . org-download-screenshot) ;control shift 4
+    ("C-s-v" . org-download-clipboard)
+    :config
+    (require 'org-download)
+    (cond
+     ((eq system-type 'darwin)
+      (setq org-download-screenshot-method "screencapture -i -x %s" ; use space to switch to window mode!
+            org-download-edit-cmd "open -n -a Preview %s")))
+    )
+
+;; Drag-and-drop to `dired`
+(add-hook 'dired-mode-hook 'org-download-enable)
